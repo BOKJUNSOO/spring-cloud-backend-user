@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class RestTemplateConfig {
 
     @Bean
-    @LoadBalanced
+    @LoadBalanced // 종속성에 추가했던 로드밸런서
     public RestTemplate restTemplate() { // 사용하지만 내가 만든 클래스는 아님 -> bean
         return new RestTemplate();
     }
