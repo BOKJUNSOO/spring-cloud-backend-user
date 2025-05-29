@@ -1,7 +1,8 @@
 package com.welab.backend_user.common.exception;
 
-public class ClientError extends RuntimeException {
-  public ClientError(String message) {
-    super(message);
-  }
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class ClientError extends ApiError {
 }

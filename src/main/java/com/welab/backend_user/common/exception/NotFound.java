@@ -1,7 +1,8 @@
 package com.welab.backend_user.common.exception;
 
-public class NotFound extends RuntimeException {
-  public NotFound(String message) {
-    super(message);
-  }
+public class NotFound extends ClientError {
+    public NotFound(String errorMessage) {
+        this.errorCode = "NotFound";
+        this.errorMessage = errorMessage;
+    }
 }

@@ -1,5 +1,6 @@
 package com.welab.backend_user.api.open;
 
+import com.welab.backend_user.common.dto.ApiResponseDto;
 import com.welab.backend_user.remote.alim.RemoteAlimService;
 import com.welab.backend_user.remote.alim.dto.AlimSendSmsDto;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,14 @@ public class UserController {
     private final RemoteAlimService remoteAlimService;
 
     @GetMapping(value= "/test")
-    public String test() {
-        return remoteAlimService.hello();
+    public ApiResponseDto<String> test() {
+        String response = remoteAlimService.hello();
+        return ApiResponseDto.createOk(response);
     }
 
     @PostMapping(value ="/sms")
-    public AlimSendSmsDto.Response sms(@RequestBody AlimSendSmsDto.Request request) {
+    public ApiResponseDto<AlimSendSmsDto.Response> sms(@RequestBody AlimSendSmsDto.Request request) {
         var response = remoteAlimService.sendSms(request);
-        return response;
+        return ApiResponseDto.createOk(response);
     }
 }
