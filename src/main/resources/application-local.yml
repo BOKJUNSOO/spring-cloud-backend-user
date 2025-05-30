@@ -36,7 +36,7 @@ spring:
       validation-timeout: 5000
   jpa:
     hibernate:
-      ddl-auto: create # 오직 테스트 환경에서만
+      ddl-auto: create # 컨테이너 디렉토리 마운트와 별개로 테이블을 삭제하고 다시만듦
     generate-ddl: true # 오직 테스트 환경에서만 (spring.jpa.generate-ddl)
     show-sql: true
     open-in-view: false # context 를 보장?
@@ -44,3 +44,9 @@ spring:
     # properties:
     #   hibernate:
     #     dialect: org.hibernate.dialect.MySQL8Dialect
+
+jwt:
+  expires-in: 86400 # 1day
+  mobile-expires-in: 31536000
+  table-expires-in: 31536000
+  secret-key: AADfas21323123ohofgdakllew32dsfasdTG764Gdslkj298GsWg86G # 대칭키로 사용

@@ -1,6 +1,7 @@
 package com.welab.backend_user.domain.dto;
 
 import com.welab.backend_user.domain.repository.SiteUserRepository;
+import com.welab.backend_user.secret.hash.SecureHashUtils;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -33,7 +34,9 @@ public class SiteUserRegisterDto {
         siteUser.setUserId(this.userId);
 
         // String hashedPassword = someHashUtill function ~_~
-        siteUser.setPassword(this.password);
+        String hashedPassword = SecureHashUtils.hash(this.password);
+        siteUser.setPassword(hashedPassword);
+
         siteUser.setPhoneNumber(this.phoneNumber);
 
         siteUser.setAge(this.age);

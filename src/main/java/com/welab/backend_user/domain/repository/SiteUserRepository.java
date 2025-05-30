@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface SiteUserRepository extends JpaRepository<SiteUser, Long> {
-    Optional<SiteUser> findByUserId(String userId);
+    // 단순 확인 여부에서 토큰발행 로직으로 변경
+    // Optional<SiteUser> findByUserId(String userId);
+    SiteUser findByUserId(String userId);
 }

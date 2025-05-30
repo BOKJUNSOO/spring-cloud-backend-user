@@ -2,11 +2,15 @@ package com.welab.backend_user.api.open;
 
 import com.welab.backend_user.common.dto.ApiResponseDto;
 import com.welab.backend_user.domain.dto.SiteUserLoginDto;
+import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
 import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
+import com.welab.backend_user.remote.alim.RemoteAlimService;
+import com.welab.backend_user.secret.jwt.dto.TokenDto;
 import com.welab.backend_user.service.SiteUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.antlr.v4.runtime.Token;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +23,6 @@ import javax.print.attribute.standard.Media;
 @RestController
 @RequestMapping(value="/api/user/v1/auth",produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-// 해당 컨트롤러는 인증이 되지 않아도 게이트 웨이에서 열어두도록 하기 위해 따로 컨트롤러를 작성한다 (auth)
 public class UserAuthController {
     private final SiteUserService siteUserService;
 
@@ -31,14 +34,16 @@ public class UserAuthController {
 
     // JWT 토큰을 리턴해주어야함
     @PostMapping(value="/login")
-    public ApiResponseDto<String> login(@RequestBody @Valid SiteUserLoginDto siteUserLoginDto) {
+    public ApiResponseDto<TokenDto.AccessRefreshToken> login(@RequestBody @Valid SiteUserLoginDto siteUserLoginDto) {
+        TokenDto.AccessRefreshToken token = siteUserService.login(siteUserLoginDto);
+        return ApiResponseDto.createOk(token);
+    }
 
-        boolean success = siteUserService.loginUser(siteUserLoginDto);
-        if(success) {
-            return ApiResponseDto.defaultOk();
-        } else {
-            // TODO : error 에 대해 Advice 해주는 예외처리 로직 필요
-            return ApiResponseDto.createError("1","비밀번호가 틀렸습니다");
-        }
+    // refresh 토큰 확인
+    @PostMapping(value="/refresh")
+    public ApiResponseDto<TokenDto.AccessToken> refresh(@RequestBody @Valid SiteUserRefreshDto siteUserRefreshDto) {
+        // TokenDto.AccessToken 타입 추론이 가능하므로 var 로 작성
+        var token = siteUserService.refresh(siteUserRefreshDto);
+        return ApiResponseDto.createOk(token);
     }
 }
