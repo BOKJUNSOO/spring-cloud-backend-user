@@ -2,13 +2,11 @@ package com.welab.backend_user.service;
 
 import com.welab.backend_user.common.exception.BadParameter;
 import com.welab.backend_user.common.exception.NotFound;
-import com.welab.backend_user.domain.dto.SiteUser;
-import com.welab.backend_user.domain.dto.SiteUserLoginDto;
-import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
-import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
+import com.welab.backend_user.domain.dto.*;
 import com.welab.backend_user.domain.repository.SiteUserRepository;
 // import jakarta.transaction.Transactional;
 import com.welab.backend_user.remote.alim.RemoteAlimService;
+import com.welab.backend_user.remote.alim.dto.AlimSendSmsDto;
 import com.welab.backend_user.secret.hash.SecureHashUtils;
 import com.welab.backend_user.secret.jwt.dto.TokenDto;
 import com.welab.backend_user.secret.jwt.props.TokenGenerator;
@@ -36,6 +34,9 @@ public class SiteUserService {
         // ** 생각해볼 부분 : Transactional 로 묶여 있기 때문에 만약 alim service 를 실패하면 회원가입이 안됨
         // 이를 메세지 발행으로 커버할 수 있다 ! -> alim service (remote) 삭제가능
         // remoteAlimService.hello();
+        // remoteAlimService.sendSms();
+        AlimSendSmsDto.Request rq = AlimSendSmsDto.fromEntity(siteUser);
+        remoteAlimService.sendSms(rq);
     }
 
     // 로그인 확인 기능

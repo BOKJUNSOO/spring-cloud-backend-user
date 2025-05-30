@@ -1,5 +1,7 @@
 package com.welab.backend_user.remote.alim.dto;
 
+import com.welab.backend_user.domain.dto.SiteUser;
+import com.welab.backend_user.domain.dto.UserInfoDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +25,14 @@ public class AlimSendSmsDto {
     public static class Response {
         private String result;
     }
+
+    public static Request fromEntity(SiteUser siteUser) {
+        Request rq = new Request();
+        rq.setUserId(siteUser.getUserId());
+        rq.setPhoneNumber(siteUser.getPhoneNumber());
+        rq.setTitle("가입완료");
+        rq.setMessage("가입이 완료되었습니다");
+        return rq;
+    }
+
 }
