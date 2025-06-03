@@ -4,20 +4,18 @@ import com.welab.backend_user.common.dto.ApiResponseDto;
 import com.welab.backend_user.domain.dto.SiteUserLoginDto;
 import com.welab.backend_user.domain.dto.SiteUserRefreshDto;
 import com.welab.backend_user.domain.dto.SiteUserRegisterDto;
-import com.welab.backend_user.remote.alim.RemoteAlimService;
+
 import com.welab.backend_user.secret.jwt.dto.TokenDto;
 import com.welab.backend_user.service.SiteUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.antlr.v4.runtime.Token;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.print.attribute.standard.Media;
 
 @Slf4j
 @RestController
@@ -29,7 +27,7 @@ public class UserAuthController {
     @PostMapping(value="/register")
     public ApiResponseDto<String> sms(@RequestBody @Valid SiteUserRegisterDto siteUserRegisterDto) {
         siteUserService.registerUser(siteUserRegisterDto);
-        return ApiResponseDto.defaultOk();
+        return ApiResponseDto.createOk("가입이 완료되었습니다");
     }
 
     // JWT 토큰을 리턴해주어야함

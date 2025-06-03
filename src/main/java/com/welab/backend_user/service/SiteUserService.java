@@ -31,12 +31,11 @@ public class SiteUserService {
     public void registerUser(SiteUserRegisterDto registerDto) {
         SiteUser siteUser = registerDto.toEntity();
         siteUserRepository.save(siteUser);
+        AlimSendSmsDto.Request rq = AlimSendSmsDto.fromEntity(siteUser);
+        remoteAlimService.sendSms(rq); // 원자성 보장이 되지 않음?
         // ** 생각해볼 부분 : Transactional 로 묶여 있기 때문에 만약 alim service 를 실패하면 회원가입이 안됨
         // 이를 메세지 발행으로 커버할 수 있다 ! -> alim service (remote) 삭제가능
         // remoteAlimService.hello();
-        // remoteAlimService.sendSms();
-        AlimSendSmsDto.Request rq = AlimSendSmsDto.fromEntity(siteUser);
-        remoteAlimService.sendSms(rq);
     }
 
     // 로그인 확인 기능

@@ -1,6 +1,5 @@
 package com.welab.backend_user.domain.dto;
 
-import com.welab.backend_user.domain.repository.SiteUserRepository;
 import com.welab.backend_user.secret.hash.SecureHashUtils;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
